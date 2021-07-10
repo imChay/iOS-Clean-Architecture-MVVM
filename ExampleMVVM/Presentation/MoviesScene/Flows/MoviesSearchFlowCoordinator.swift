@@ -13,11 +13,13 @@ protocol MoviesSearchFlowCoordinatorDependencies  {
     func makeMoviesQueriesSuggestionsListViewController(didSelect: @escaping MoviesQueryListViewModelDidSelectAction) -> UIViewController
 }
 
+/// 影视搜索
 final class MoviesSearchFlowCoordinator {
     
     private weak var navigationController: UINavigationController?
     private let dependencies: MoviesSearchFlowCoordinatorDependencies
 
+    /// 电影列表
     private weak var moviesListVC: MoviesListViewController?
     private weak var moviesQueriesSuggestionsVC: UIViewController?
 
@@ -37,12 +39,16 @@ final class MoviesSearchFlowCoordinator {
         navigationController?.pushViewController(vc, animated: false)
         moviesListVC = vc
     }
-
+    
+    /// 展示电影详情
+    /// - Parameter movie:
     private func showMovieDetails(movie: Movie) {
         let vc = dependencies.makeMoviesDetailsViewController(movie: movie)
         navigationController?.pushViewController(vc, animated: true)
     }
-
+    
+    /// 展示搜索建议
+    /// - Parameter didSelect:
     private func showMovieQueriesSuggestions(didSelect: @escaping (MovieQuery) -> Void) {
         guard let moviesListViewController = moviesListVC, moviesQueriesSuggestionsVC == nil,
             let container = moviesListViewController.suggestionsListContainer else { return }
@@ -53,7 +59,8 @@ final class MoviesSearchFlowCoordinator {
         moviesQueriesSuggestionsVC = vc
         container.isHidden = false
     }
-
+    
+    /// 关闭搜索建议
     private func closeMovieQueriesSuggestions() {
         moviesQueriesSuggestionsVC?.remove()
         moviesQueriesSuggestionsVC = nil

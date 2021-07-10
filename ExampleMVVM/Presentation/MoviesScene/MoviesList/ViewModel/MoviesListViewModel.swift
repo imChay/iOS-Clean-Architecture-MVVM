@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 页面跳转
 struct MoviesListViewModelActions {
     /// Note: if you would need to edit movie inside Details screen and update this Movies List screen with updated movie then you would need this closure:
     /// showMovieDetails: (Movie, @escaping (_ updated: Movie) -> Void) -> Void
@@ -20,6 +21,7 @@ enum MoviesListViewModelLoading {
     case nextPage
 }
 
+/// 输入
 protocol MoviesListViewModelInput {
     func viewDidLoad()
     func didLoadNextPage()
@@ -30,6 +32,7 @@ protocol MoviesListViewModelInput {
     func didSelectItem(at index: Int)
 }
 
+/// 输出
 protocol MoviesListViewModelOutput {
     var items: Observable<[MoviesListItemViewModel]> { get } /// Also we can calculate view model items on demand:  https://github.com/kudoleh/iOS-Clean-Architecture-MVVM/pull/10/files
     var loading: Observable<MoviesListViewModelLoading?> { get }

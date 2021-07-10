@@ -7,8 +7,10 @@
 
 import Foundation
 
+/// didset + block 的方法做了一个简单的 可观察序列
 public final class Observable<Value> {
     
+    /// 观察者
     struct Observer<Value> {
         weak var observer: AnyObject?
         let block: (Value) -> Void

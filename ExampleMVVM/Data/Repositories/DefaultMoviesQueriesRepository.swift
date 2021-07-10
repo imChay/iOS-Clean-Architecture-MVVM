@@ -21,10 +21,18 @@ final class DefaultMoviesQueriesRepository {
 
 extension DefaultMoviesQueriesRepository: MoviesQueriesRepository {
     
+    /// 获取最近搜索
+    /// - Parameters:
+    ///   - maxCount:
+    ///   - completion:
     func fetchRecentsQueries(maxCount: Int, completion: @escaping (Result<[MovieQuery], Error>) -> Void) {
         return moviesQueriesPersistentStorage.fetchRecentsQueries(maxCount: maxCount, completion: completion)
     }
     
+    /// 保存最近搜索
+    /// - Parameters:
+    ///   - query:
+    ///   - completion:
     func saveRecentQuery(query: MovieQuery, completion: @escaping (Result<MovieQuery, Error>) -> Void) {
         moviesQueriesPersistentStorage.saveRecentQuery(query: query, completion: completion)
     }

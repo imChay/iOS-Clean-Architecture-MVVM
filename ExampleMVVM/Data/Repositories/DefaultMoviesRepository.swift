@@ -20,8 +20,16 @@ final class DefaultMoviesRepository {
 }
 
 extension DefaultMoviesRepository: MoviesRepository {
-
-    public func fetchMoviesList(query: MovieQuery, page: Int,
+    
+    /// 获取电影列表
+    /// - Parameters:
+    ///   - query:
+    ///   - page:
+    ///   - cached:
+    ///   - completion:
+    /// - Returns:
+    public func fetchMoviesList(query: MovieQuery,
+                                page: Int,
                                 cached: @escaping (MoviesPage) -> Void,
                                 completion: @escaping (Result<MoviesPage, Error>) -> Void) -> Cancellable? {
 

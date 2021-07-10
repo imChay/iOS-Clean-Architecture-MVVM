@@ -18,7 +18,15 @@ final class DefaultPosterImagesRepository {
 
 extension DefaultPosterImagesRepository: PosterImagesRepository {
     
-    func fetchImage(with imagePath: String, width: Int, completion: @escaping (Result<Data, Error>) -> Void) -> Cancellable? {
+    /// 获取图片
+    /// - Parameters:
+    ///   - imagePath:
+    ///   - width:
+    ///   - completion:
+    /// - Returns:
+    func fetchImage(with imagePath: String,
+                             width: Int,
+                        completion: @escaping (Result<Data, Error>) -> Void) -> Cancellable? {
         
         let endpoint = APIEndpoints.getMoviePoster(path: imagePath, width: width)
         let task = RepositoryTask()

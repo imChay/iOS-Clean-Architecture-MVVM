@@ -8,6 +8,7 @@
 import UIKit
 import SwiftUI
 
+/// 电影场景容器
 final class MoviesSceneDIContainer {
     
     struct Dependencies {
@@ -26,11 +27,14 @@ final class MoviesSceneDIContainer {
     }
     
     // MARK: - Use Cases
+    
+    // 搜索
     func makeSearchMoviesUseCase() -> SearchMoviesUseCase {
         return DefaultSearchMoviesUseCase(moviesRepository: makeMoviesRepository(),
                                           moviesQueriesRepository: makeMoviesQueriesRepository())
     }
     
+    // 获取历史搜索记录
     func makeFetchRecentMovieQueriesUseCase(requestValue: FetchRecentMovieQueriesUseCase.RequestValue,
                                             completion: @escaping (FetchRecentMovieQueriesUseCase.ResultValue) -> Void) -> UseCase {
         return FetchRecentMovieQueriesUseCase(requestValue: requestValue,
@@ -51,7 +55,16 @@ final class MoviesSceneDIContainer {
         return DefaultPosterImagesRepository(dataTransferService: dependencies.imageDataTransferService)
     }
     
-    // MARK: - Movies List
+    // MARK: - Flow Coordinators
+    func makeMoviesSearchFlowCoordinator(navigationController: UINavigationController) -> MoviesSearchFlowCoordinator {
+        return MoviesSearchFlowCoordinator(navigationController: navigationController,
+                                           dependencies: self)
+    }
+}
+
+extension MoviesSceneDIContainer: MoviesSearchFlowCoordinatorDependencies {
+    
+    // MARK: - 创建 Movies List 控制器
     func makeMoviesListViewController(actions: MoviesListViewModelActions) -> MoviesListViewController {
         return MoviesListViewController.create(with: makeMoviesListViewModel(actions: actions),
                                                posterImagesRepository: makePosterImagesRepository())
@@ -92,12 +105,5 @@ final class MoviesSceneDIContainer {
     func makeMoviesQueryListViewModelWrapper(didSelect: @escaping MoviesQueryListViewModelDidSelectAction) -> MoviesQueryListViewModelWrapper {
         return MoviesQueryListViewModelWrapper(viewModel: makeMoviesQueryListViewModel(didSelect: didSelect))
     }
-
-    // MARK: - Flow Coordinators
-    func makeMoviesSearchFlowCoordinator(navigationController: UINavigationController) -> MoviesSearchFlowCoordinator {
-        return MoviesSearchFlowCoordinator(navigationController: navigationController,
-                                           dependencies: self)
-    }
+    
 }
-
-extension MoviesSceneDIContainer: MoviesSearchFlowCoordinatorDependencies {}

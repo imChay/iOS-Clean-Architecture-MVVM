@@ -13,6 +13,7 @@ protocol SearchMoviesUseCase {
                  completion: @escaping (Result<MoviesPage, Error>) -> Void) -> Cancellable?
 }
 
+/// 搜索电影
 final class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
 
     private let moviesRepository: MoviesRepository
